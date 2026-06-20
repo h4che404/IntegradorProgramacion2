@@ -1,26 +1,32 @@
 package integrado.prog2.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Categoria extends BaseEntity {
     private String name;
     private String description;
+    private List<Producto> products;
 
     public Categoria() {
         super();
+        this.products = new ArrayList<>();
     }
 
     public Categoria(String name, String description) {
         super();
         this.name = name;
         this.description = description;
+        this.products = new ArrayList<>();
     }
 
     public Categoria(Long id, boolean eliminado, LocalDateTime createdAt, String name, String description) {
         super(id, eliminado, createdAt);
         this.name = name;
         this.description = description;
+        this.products = new ArrayList<>();
     }
 
     public String getName() {
@@ -37,6 +43,26 @@ public class Categoria extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Producto> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Producto> products) {
+        this.products = products != null ? new ArrayList<>(products) : new ArrayList<>();
+    }
+
+    public void addProduct(Producto product) {
+        if (product != null) {
+            products.add(product);
+        }
+    }
+
+    public void removeProduct(Producto product) {
+        if (product != null) {
+            products.remove(product);
+        }
     }
 
     @Override

@@ -45,4 +45,9 @@ public class PersistenceConfig {
         }
         return value;
     }
+
+    public String getProperty(String key, String defaultValue) {
+        String value = properties.get(key);
+        return (value == null) ? defaultValue : value;
+    }
 }

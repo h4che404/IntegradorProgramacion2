@@ -16,7 +16,7 @@ public class ConnectionFactory {
         String driver = config.getRequiredProperty("db.driver");
         this.url = config.getRequiredProperty("db.url");
         this.username = config.getRequiredProperty("db.username");
-        this.password = config.getRequiredProperty("db.password");
+        this.password = config.getProperty("db.password", "");
 
         try {
             Class.forName(driver);
