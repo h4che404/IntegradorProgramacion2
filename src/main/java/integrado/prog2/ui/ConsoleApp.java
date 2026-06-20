@@ -42,7 +42,7 @@ public class ConsoleApp {
             System.out.println("\n=== SISTEMA DE PEDIDOS (FOOD STORE) ===");
             System.out.println("1. Categorías");
             System.out.println("2. Productos");
-            System.out.println("3. Usuarios");
+            System.out.println("3. Usuarios / Clientes");
             System.out.println("4. Pedidos");
             System.out.println("5. Probar conexión a la BD");
             System.out.println("0. Salir");
@@ -119,7 +119,7 @@ public class ConsoleApp {
     private void showUserMenu() {
         boolean back = false;
         while (!back) {
-            System.out.println("\n--- Usuarios ---");
+            System.out.println("\n--- Usuarios / Clientes ---");
             System.out.println("1. Listar");
             System.out.println("2. Crear");
             System.out.println("3. Editar");
@@ -369,13 +369,13 @@ public class ConsoleApp {
         ensureProductsExist();
 
         listUsers();
-        Long userId = inputReader.readRequiredLong("ID del usuario: ");
+        Long userId = inputReader.readRequiredLong("ID del usuario (Cliente): ");
+        Usuario user = userService.findById(userId); // ¡Validación temprana! Falla acá si no existe.
+
         FormaPago paymentMethod = selectPaymentMethod(null);
         Estado status = selectOrderStatus(Estado.PENDIENTE);
 
         Pedido order = new Pedido();
-        Usuario user = new Usuario();
-        user.setId(userId);
         order.setUser(user);
         order.setDate(LocalDate.now());
         order.setPaymentMethod(paymentMethod);
