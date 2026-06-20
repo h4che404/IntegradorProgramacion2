@@ -33,6 +33,7 @@ public class UserService {
 
     public Usuario update(Usuario user) {
         validate(user);
+        validateId(user.getId(), "El ID del usuario es obligatorio para actualizar.");
         findById(user.getId());
         return userDao.update(user);
     }
@@ -43,6 +44,9 @@ public class UserService {
     }
 
     private void validate(Usuario user) {
+        if (user == null) {
+            throw new ValidationException("El usuario es obligatorio.");
+        }
         if (user.getFirstName() == null || user.getFirstName().isBlank()) {
             throw new ValidationException("El nombre del usuario es obligatorio.");
         }
@@ -55,11 +59,20 @@ public class UserService {
         if (!BASIC_MAIL_PATTERN.matcher(user.getMail()).matches()) {
             throw new ValidationException("El formato del mail es inválido.");
         }
+        if (user.getPhone() == null || user.getPhone().isBlank()) {
+            throw new ValidationException("El celular del usuario es obligatorio.");
+        }
         if (user.getPassword() == null || user.getPassword().isBlank()) {
             throw new ValidationException("La contraseña del usuario es obligatoria.");
         }
         if (user.getRole() == null) {
             throw new ValidationException("El rol del usuario es obligatorio.");
+        }
+    }
+
+    private void validateId(Long id, String message) {
+        if (id == null) {
+            throw new ValidationException(message);
         }
     }
 }

@@ -59,7 +59,7 @@ public class Pedido extends BaseEntity implements Calculable {
     }
 
     public void setTotal(Double total) {
-        this.total = total;
+        this.total = total != null ? total : 0.0;
     }
 
     public FormaPago getPaymentMethod() {
@@ -83,7 +83,7 @@ public class Pedido extends BaseEntity implements Calculable {
     }
 
     public void setDetails(List<DetallePedido> details) {
-        this.details = details;
+        this.details = details != null ? new ArrayList<>(details) : new ArrayList<>();
     }
 
     public void addDetallePedido(int quantity, Double unitPrice, Producto product) {

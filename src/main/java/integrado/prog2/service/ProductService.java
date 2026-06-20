@@ -40,6 +40,7 @@ public class ProductService {
 
     public Producto update(Producto product) {
         validate(product);
+        validateId(product.getId(), "El ID del producto es obligatorio para actualizar.");
         findById(product.getId());
         Categoria category = categoryService.findById(product.getCategory().getId());
         product.setCategory(category);
@@ -52,17 +53,32 @@ public class ProductService {
     }
 
     private void validate(Producto product) {
+        if (product == null) {
+            throw new ValidationException("El producto es obligatorio.");
+        }
         if (product.getName() == null || product.getName().isBlank()) {
             throw new ValidationException("El nombre del producto es obligatorio.");
         }
         if (product.getPrice() == null || product.getPrice() < 0) {
             throw new ValidationException("El precio del producto debe ser mayor o igual a cero.");
         }
+        if (product.getDescription() == null || product.getDescription().isBlank()) {
+            throw new ValidationException("La descripción del producto es obligatoria.");
+        }
         if (product.getStock() < 0) {
             throw new ValidationException("El stock del producto debe ser mayor o igual a cero.");
         }
+        if (product.getImage() == null || product.getImage().isBlank()) {
+            throw new ValidationException("La imagen o referencia visual del producto es obligatoria.");
+        }
         if (product.getCategory() == null || product.getCategory().getId() == null) {
             throw new ValidationException("La categoría del producto es obligatoria.");
+        }
+    }
+
+    private void validateId(Long id, String message) {
+        if (id == null) {
+            throw new ValidationException(message);
         }
     }
 }

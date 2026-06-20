@@ -30,6 +30,7 @@ public class CategoryService {
 
     public Categoria update(Categoria category) {
         validate(category);
+        validateId(category.getId(), "El ID de la categoría es obligatorio para actualizar.");
         findById(category.getId());
         return categoryDao.update(category);
     }
@@ -43,8 +44,20 @@ public class CategoryService {
     }
 
     private void validate(Categoria category) {
+        if (category == null) {
+            throw new ValidationException("La categoría es obligatoria.");
+        }
         if (category.getName() == null || category.getName().isBlank()) {
             throw new ValidationException("El nombre de la categoría es obligatorio.");
+        }
+        if (category.getDescription() == null || category.getDescription().isBlank()) {
+            throw new ValidationException("La descripción de la categoría es obligatoria.");
+        }
+    }
+
+    private void validateId(Long id, String message) {
+        if (id == null) {
+            throw new ValidationException(message);
         }
     }
 }

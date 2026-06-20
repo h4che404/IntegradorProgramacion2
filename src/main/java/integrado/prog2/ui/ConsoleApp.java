@@ -44,20 +44,33 @@ public class ConsoleApp {
             System.out.println("2. Productos");
             System.out.println("3. Usuarios");
             System.out.println("4. Pedidos");
+            System.out.println("5. Probar conexión a la BD");
             System.out.println("0. Salir");
 
-            int option = inputReader.readMenuOption("Seleccione: ", 0, 4);
+            int option = inputReader.readMenuOption("Seleccione: ", 0, 5);
             switch (option) {
                 case 1 -> showCategoryMenu();
                 case 2 -> showProductMenu();
                 case 3 -> showUserMenu();
                 case 4 -> showOrderMenu();
+                case 5 -> testConnection();
                 case 0 -> {
                     running = false;
                     System.out.println("¡Hasta luego!");
                 }
                 default -> System.out.println("Opción inválida.");
             }
+        }
+    }
+
+    private void testConnection() {
+        System.out.println("\n[📡 Probando conexión a la base de datos...]");
+        try {
+            categoryService.findAll();
+            System.out.println("✅ ¡Conexión exitosa! Java y MySQL se están comunicando perfectamente.");
+        } catch (Exception e) {
+            System.out.println("❌ Error de comunicación: " + e.getMessage());
+            System.out.println("👉 Verificá que MySQL esté prendido y que persistence.xml tenga tu usuario/clave.");
         }
     }
 

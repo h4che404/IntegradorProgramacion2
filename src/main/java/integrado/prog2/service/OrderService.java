@@ -70,6 +70,12 @@ public class OrderService {
     }
 
     public Pedido update(Pedido order) {
+        if (order == null) {
+            throw new ValidationException("El pedido es obligatorio.");
+        }
+        if (order.getId() == null) {
+            throw new ValidationException("El ID del pedido es obligatorio para actualizar.");
+        }
         if (order.getStatus() == null) {
             throw new ValidationException("El estado del pedido es obligatorio.");
         }
@@ -89,6 +95,9 @@ public class OrderService {
     }
 
     private void validate(Pedido order) {
+        if (order == null) {
+            throw new ValidationException("El pedido es obligatorio.");
+        }
         if (order.getUser() == null || order.getUser().getId() == null) {
             throw new ValidationException("El pedido debe tener un usuario activo.");
         }
@@ -100,6 +109,9 @@ public class OrderService {
         }
 
         for (DetallePedido detail : order.getDetails()) {
+            if (detail == null) {
+                throw new ValidationException("Cada detalle del pedido debe existir.");
+            }
             if (detail.getProduct() == null || detail.getProduct().getId() == null) {
                 throw new ValidationException("Cada detalle del pedido debe tener un producto válido.");
             }

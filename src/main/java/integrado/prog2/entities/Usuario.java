@@ -3,6 +3,8 @@ package integrado.prog2.entities;
 import integrado.prog2.enums.Rol;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Usuario extends BaseEntity {
@@ -12,9 +14,11 @@ public class Usuario extends BaseEntity {
     private String phone;
     private String password;
     private Rol role;
+    private List<Pedido> orders;
 
     public Usuario() {
         super();
+        this.orders = new ArrayList<>();
     }
 
     public Usuario(String firstName, String lastName, String mail, String phone, String password, Rol role) {
@@ -25,6 +29,7 @@ public class Usuario extends BaseEntity {
         this.phone = phone;
         this.password = password;
         this.role = role;
+        this.orders = new ArrayList<>();
     }
 
     public Usuario(Long id, boolean eliminado, LocalDateTime createdAt, String firstName, String lastName, String mail,
@@ -36,6 +41,7 @@ public class Usuario extends BaseEntity {
         this.phone = phone;
         this.password = password;
         this.role = role;
+        this.orders = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -84,6 +90,26 @@ public class Usuario extends BaseEntity {
 
     public void setRole(Rol role) {
         this.role = role;
+    }
+
+    public List<Pedido> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Pedido> orders) {
+        this.orders = orders != null ? new ArrayList<>(orders) : new ArrayList<>();
+    }
+
+    public void addOrder(Pedido order) {
+        if (order != null) {
+            orders.add(order);
+        }
+    }
+
+    public void removeOrder(Pedido order) {
+        if (order != null) {
+            orders.remove(order);
+        }
     }
 
     @Override
